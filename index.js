@@ -3,15 +3,23 @@
 /**
  * Custom implementation of a double ended queue.
  */
-function Denque(array, options) {
+function Denque(arrayOrCapacity, options) {
   var options = options || {};
   this._capacity = options.capacity;
 
   this._head = 0;
   this._tail = 0;
 
-  if (Array.isArray(array)) {
-    this._fromArray(array);
+  if (Array.isArray(arrayOrCapacity)) {
+    this._fromArray(arrayOrCapacity);
+  } else if (typeof(arrayOrCapacity) == "number") {
+    var capacity = arrayOrCapacity >> 0;
+    if (capacity < 0) capacity = 0;
+
+    // Always use the next power of 2. If 16 is requested and 16 elements are inserted, _list has 
+    // to grow to 32 anyways.
+    this._list = new Array(this._nextPowerOf2(capacity));
+    this._capacityMask = this._list.length - 1;
   } else {
     this._capacityMask = 0x3;
     this._list = new Array(4);

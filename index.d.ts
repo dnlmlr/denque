@@ -3,9 +3,9 @@ declare class Denque<T = any> {
 
   constructor();
 
-  constructor(array: T[]);
+  constructor(arrayOrCapacity: T[] | number);
 
-  constructor(array: T[], options: IDenqueOptions);
+  constructor(arrayOrCapacity: T[] | number, options: IDenqueOptions);
 
   push(item: T): number;
 
